@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>SSH Multiple Key Switch | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="github使用SSH与客户端连接。如果是单用户（first），生成密钥对后，将公钥保存至github，每次连接时SSH客户端发送本地私钥（默认~/.ssh/id_rsa）到服务端验证。单用户情况下，连接的服务器上保存的公钥和发送的私钥自然是配对的。但是如果是多用户（first，second），我们在连接到second的帐号时，second保存的是自己的公钥，但是SSH客户端依然发送默认私钥，即">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH Multiple Key Switch">
+<meta property="og:url" content="http://yoursite.com/2017/05/11/SSH-Multiple-Key-Switch/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="github使用SSH与客户端连接。如果是单用户（first），生成密钥对后，将公钥保存至github，每次连接时SSH客户端发送本地私钥（默认~/.ssh/id_rsa）到服务端验证。单用户情况下，连接的服务器上保存的公钥和发送的私钥自然是配对的。但是如果是多用户（first，second），我们在连接到second的帐号时，second保存的是自己的公钥，但是SSH客户端依然发送默认私钥，即">
+<meta property="og:updated_time" content="2017-05-13T12:21:11.951Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSH Multiple Key Switch">
+<meta name="twitter:description" content="github使用SSH与客户端连接。如果是单用户（first），生成密钥对后，将公钥保存至github，每次连接时SSH客户端发送本地私钥（默认~/.ssh/id_rsa）到服务端验证。单用户情况下，连接的服务器上保存的公钥和发送的私钥自然是配对的。但是如果是多用户（first，second），我们在连接到second的帐号时，second保存的是自己的公钥，但是SSH客户端依然发送默认私钥，即">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SSH-Multiple-Key-Switch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/11/SSH-Multiple-Key-Switch/" class="article-date">
+  <time datetime="2017-05-12T00:36:00.000Z" itemprop="datePublished">2017-05-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SSH Multiple Key Switch
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>github使用SSH与客户端连接。如果是单用户（first），生成密钥对后，将公钥保存至github，每次连接时SSH客户端发送本地私钥（默认~/.ssh/id_rsa）到服务端验证。单用户情况下，连接的服务器上保存的公钥和发送的私钥自然是配对的。但是如果是多用户（first，second），我们在连接到second的帐号时，second保存的是自己的公钥，但是SSH客户端依然发送默认私钥，即first的私钥，那么这个验证自然无法通过。不过，要实现多帐号下的SSH key切换在客户端做一些配置即可</p>
+</blockquote>
+<h1 id="Multiple-SSH-Keys-settings-for-different-github-account"><a href="#Multiple-SSH-Keys-settings-for-different-github-account" class="headerlink" title="Multiple SSH Keys settings for different github account"></a>Multiple SSH Keys settings for different github account</h1><h2 id="create-different-public-key"><a href="#create-different-public-key" class="headerlink" title="create different public key"></a>create different public key</h2><p>create different ssh key according the article <a href="https://help.github.com/articles/set-up-git/" target="_blank" rel="external">Mac Set-Up Git</a></p>
+<pre><code>$ ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot;
+</code></pre><p>Please refer to <a href="https://help.github.com/categories/authenticating-to-github/" target="_blank" rel="external">github ssh issues</a> for common problems.</p>
+<p>for example, 2 keys created at:</p>
+<pre><code>~/.ssh/id_rsa_activehacker
+~/.ssh/id_rsa_jexchan
+</code></pre><p>then, add these two keys as following</p>
+<pre><code>$ ssh-add ~/.ssh/id_rsa_activehacker
+$ ssh-add ~/.ssh/id_rsa_jexchan
+</code></pre><p>you can delete all cached keys before</p>
+<pre><code>$ ssh-add -D
+</code></pre><p>finally, you can check your saved keys</p>
+<pre><code>$ ssh-add -l
+</code></pre><h2 id="Modify-the-ssh-config"><a href="#Modify-the-ssh-config" class="headerlink" title="Modify the ssh config"></a>Modify the ssh config</h2><pre><code>$ cd ~/.ssh/
+$ touch config
+$ subl -a config
+</code></pre><p>Then added</p>
+<pre><code>#activehacker account
+Host github.com-activehacker
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa_activehacker
+
+#jexchan account
+Host github.com-jexchan
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa_jexchan
+</code></pre><h2 id="Clone-you-repo-and-modify-your-Git-config"><a href="#Clone-you-repo-and-modify-your-Git-config" class="headerlink" title="Clone you repo and modify your Git config"></a>Clone you repo and modify your Git config</h2><p>clone your repo<br>    git clone git@github.com:activehacker/gfs.git gfs_jexchan</p>
+<p>cd gfs_jexchan and modify git config</p>
+<pre><code>$ git config user.name &quot;jexchan&quot;
+$ git config user.email &quot;jexchan@gmail.com&quot; 
+
+$ git config user.name &quot;activehacker&quot;
+$ git config user.email &quot;jexlab@gmail.com&quot; 
+</code></pre><p>or you can have global git config<br>    $ git config –global user.name “jexchan”<br>    $ git config –global user.email “jexchan@gmail.com”</p>
+<p>then use normal flow to push your code</p>
+<pre><code>$ git add .
+$ git commit -m &quot;your comments&quot;
+$ git push
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/11/SSH-Multiple-Key-Switch/" data-id="cj2nabu4u0005rwpvu6mq435y" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/11/B-Tree/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          B+Tree
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/11/Enable-https-support-for-thatyear-me/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Enable https support for thatyear.me</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/13/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/Custom_Dmain/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/11/B-Tree/">B+Tree</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/11/SSH-Multiple-Key-Switch/">SSH Multiple Key Switch</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/11/Enable-https-support-for-thatyear-me/">Enable https support for thatyear.me</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

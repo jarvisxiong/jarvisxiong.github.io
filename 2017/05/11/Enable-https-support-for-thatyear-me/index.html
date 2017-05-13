@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Enable https support for thatyear.me | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.证书选择 https 证书有很多颁发者，处于费用的考虑（毕竟这个博客已经从日更变为月更到现在是年更），没必要每年花费个几百上千的去买证书，于是就是用了 Let’s Encrypt 提供的免费 https 证书。 证书的生成在Let’s Encrypt 网站上有详细的步骤说明。对于绝大多数的主机，只需要在 cert 上选择操作系统以及 http 服务器的类型，就可以通过脚本一键生成证书了。 ht">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Enable https support for thatyear.me">
+<meta property="og:url" content="http://yoursite.com/2017/05/11/Enable-https-support-for-thatyear-me/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.证书选择 https 证书有很多颁发者，处于费用的考虑（毕竟这个博客已经从日更变为月更到现在是年更），没必要每年花费个几百上千的去买证书，于是就是用了 Let’s Encrypt 提供的免费 https 证书。 证书的生成在Let’s Encrypt 网站上有详细的步骤说明。对于绝大多数的主机，只需要在 cert 上选择操作系统以及 http 服务器的类型，就可以通过脚本一键生成证书了。 ht">
+<meta property="og:updated_time" content="2017-05-13T12:21:11.951Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Enable https support for thatyear.me">
+<meta name="twitter:description" content="1.证书选择 https 证书有很多颁发者，处于费用的考虑（毕竟这个博客已经从日更变为月更到现在是年更），没必要每年花费个几百上千的去买证书，于是就是用了 Let’s Encrypt 提供的免费 https 证书。 证书的生成在Let’s Encrypt 网站上有详细的步骤说明。对于绝大多数的主机，只需要在 cert 上选择操作系统以及 http 服务器的类型，就可以通过脚本一键生成证书了。 ht">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Enable-https-support-for-thatyear-me" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/11/Enable-https-support-for-thatyear-me/" class="article-date">
+  <time datetime="2017-05-11T16:24:00.000Z" itemprop="datePublished">2017-05-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Enable https support for thatyear.me
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-证书选择"><a href="#1-证书选择" class="headerlink" title="1.证书选择"></a>1.证书选择</h3><blockquote>
+<p>https 证书有很多颁发者，处于费用的考虑（毕竟这个博客已经从日更变为月更到现在是年更），没必要每年花费个几百上千的去买证书，于是就是用了 Let’s Encrypt 提供的免费 https 证书。</p>
+<p>证书的生成在Let’s Encrypt 网站上有详细的步骤说明。对于绝大多数的主机，只需要在 <a href="https://certbot.eff.org/" target="_blank" rel="external">cert</a> 上选择操作系统以及 http 服务器的类型，就可以通过脚本一键生成证书了。</p>
+<p><a href="https://certbot.eff.org/#centosrhel7-nginx" target="_blank" rel="external">https://certbot.eff.org/#centosrhel7-nginx</a></p>
+</blockquote>
+<h4 id="2-nginx编译"><a href="#2-nginx编译" class="headerlink" title="2.nginx编译"></a>2.nginx编译</h4><p>编译 nginx 的时候需要参数 –with-http_ssl_module<br>参考<a href="http://nginx.org/en/docs/http/configuring_https_servers.html" target="_blank" rel="external">官网配置</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       listen 443 ssl;</div><div class="line">       listen [::]:443 ssl ipv6only=on;</div><div class="line">       ssl_certificate /etc/letsencrypt/live/thatyear.me/fullchain.pem;</div><div class="line">       ssl_certificate_key /etc/letsencrypt/live/thatyear.me/privkey.pem;</div><div class="line">       ssl_trusted_certificate /etc/letsencrypt/live/thatyear.me/chain.pem;</div><div class="line">       location  / &#123;</div><div class="line">   #        root    /data/www/helloworld;</div><div class="line">   #        index   index.html;</div><div class="line">           proxy_pass http://hexo_server;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h4 id="3-问题"><a href="#3-问题" class="headerlink" title="3.问题"></a>3.问题</h4><p>执行过程中可能需要依赖库<br>证书有效期是90天，需要自动更新<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">0 0 1 */3 * bash /path/to/certbot-auto renew</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/11/Enable-https-support-for-thatyear-me/" data-id="cj2nabu4r0003rwpvw8gu8nn0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/11/SSH-Multiple-Key-Switch/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SSH Multiple Key Switch
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/11/Trie树/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Trie树</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github/">Github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Github/" style="font-size: 10px;">Github</a> <a href="/tags/Hexo/" style="font-size: 20px;">Hexo</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/13/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/Custom_Dmain/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/11/B-Tree/">B+Tree</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/11/SSH-Multiple-Key-Switch/">SSH Multiple Key Switch</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/11/Enable-https-support-for-thatyear-me/">Enable https support for thatyear.me</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
